@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Register | TravelSetu{% endblock %}
+{% block content %}<section class="container narrow section"><div class="panel"><h2>Create test account</h2><form method="post"><label>Full name<input name="full_name"></label><label>Username<input name="username" required></label><label>Gmail address for verification code<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" required></label><button class="btn" type="submit">Create Account</button></form></div></section>{% endblock %}

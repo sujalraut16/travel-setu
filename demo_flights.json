@@ -1,0 +1,1295 @@
+{
+  "_note": "SAMPLE DATA for development/demo only. Flight numbers, times and prices are fictional.",
+  "routes": {
+    "PNQ-DEL": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 431",
+        "departs": "06:00",
+        "duration_min": 135,
+        "price": 5200
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 766",
+        "departs": "08:30",
+        "duration_min": 130,
+        "price": 4600
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 940",
+        "departs": "11:15",
+        "duration_min": 145,
+        "price": 4600
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 474",
+        "departs": "14:00",
+        "duration_min": 145,
+        "price": 4600
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 619",
+        "departs": "17:30",
+        "duration_min": 135,
+        "price": 4600
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 188",
+        "departs": "20:45",
+        "duration_min": 140,
+        "price": 5200
+      }
+    ],
+    "DEL-PNQ": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 171",
+        "departs": "06:00",
+        "duration_min": 135,
+        "price": 4600
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 664",
+        "departs": "08:30",
+        "duration_min": 140,
+        "price": 4600
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 946",
+        "departs": "11:15",
+        "duration_min": 145,
+        "price": 4600
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 328",
+        "departs": "14:00",
+        "duration_min": 145,
+        "price": 4600
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 690",
+        "departs": "17:30",
+        "duration_min": 145,
+        "price": 5200
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 150",
+        "departs": "20:45",
+        "duration_min": 135,
+        "price": 4600
+      }
+    ],
+    "BOM-DEL": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 670",
+        "departs": "06:00",
+        "duration_min": 130,
+        "price": 5000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 529",
+        "departs": "08:30",
+        "duration_min": 130,
+        "price": 5300
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 220",
+        "departs": "11:15",
+        "duration_min": 140,
+        "price": 5000
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 673",
+        "departs": "14:00",
+        "duration_min": 130,
+        "price": 4400
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 695",
+        "departs": "17:30",
+        "duration_min": 140,
+        "price": 5700
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 292",
+        "departs": "20:45",
+        "duration_min": 130,
+        "price": 4400
+      }
+    ],
+    "DEL-BOM": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 660",
+        "departs": "06:00",
+        "duration_min": 125,
+        "price": 5300
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 161",
+        "departs": "08:30",
+        "duration_min": 140,
+        "price": 4700
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 608",
+        "departs": "11:15",
+        "duration_min": 140,
+        "price": 5000
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 895",
+        "departs": "14:00",
+        "duration_min": 130,
+        "price": 5000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 699",
+        "departs": "17:30",
+        "duration_min": 135,
+        "price": 5000
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 406",
+        "departs": "20:45",
+        "duration_min": 130,
+        "price": 6200
+      }
+    ],
+    "BOM-BLR": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 284",
+        "departs": "06:00",
+        "duration_min": 100,
+        "price": 3300
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 688",
+        "departs": "08:30",
+        "duration_min": 100,
+        "price": 4200
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 606",
+        "departs": "11:15",
+        "duration_min": 100,
+        "price": 4600
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 559",
+        "departs": "14:00",
+        "duration_min": 100,
+        "price": 4200
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 174",
+        "departs": "17:30",
+        "duration_min": 95,
+        "price": 4200
+      }
+    ],
+    "BLR-BOM": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 528",
+        "departs": "06:00",
+        "duration_min": 100,
+        "price": 5100
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 450",
+        "departs": "08:30",
+        "duration_min": 100,
+        "price": 3900
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 531",
+        "departs": "11:15",
+        "duration_min": 95,
+        "price": 4600
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 179",
+        "departs": "14:00",
+        "duration_min": 110,
+        "price": 4200
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 908",
+        "departs": "17:30",
+        "duration_min": 100,
+        "price": 3900
+      }
+    ],
+    "DEL-BLR": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 811",
+        "departs": "06:00",
+        "duration_min": 175,
+        "price": 5900
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 608",
+        "departs": "08:30",
+        "duration_min": 185,
+        "price": 6800
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 567",
+        "departs": "11:15",
+        "duration_min": 170,
+        "price": 6800
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 195",
+        "departs": "14:00",
+        "duration_min": 175,
+        "price": 5600
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 813",
+        "departs": "17:30",
+        "duration_min": 170,
+        "price": 5000
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 848",
+        "departs": "20:45",
+        "duration_min": 175,
+        "price": 6300
+      }
+    ],
+    "BLR-DEL": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 691",
+        "departs": "06:00",
+        "duration_min": 180,
+        "price": 5600
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 833",
+        "departs": "08:30",
+        "duration_min": 180,
+        "price": 6300
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 455",
+        "departs": "11:15",
+        "duration_min": 170,
+        "price": 5600
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 463",
+        "departs": "14:00",
+        "duration_min": 175,
+        "price": 5900
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 219",
+        "departs": "17:30",
+        "duration_min": 180,
+        "price": 5000
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 323",
+        "departs": "20:45",
+        "duration_min": 175,
+        "price": 5300
+      }
+    ],
+    "BLR-HYD": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 856",
+        "departs": "06:00",
+        "duration_min": 75,
+        "price": 3200
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 500",
+        "departs": "08:30",
+        "duration_min": 80,
+        "price": 2600
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 270",
+        "departs": "11:15",
+        "duration_min": 80,
+        "price": 3200
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 662",
+        "departs": "14:00",
+        "duration_min": 75,
+        "price": 2900
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 938",
+        "departs": "17:30",
+        "duration_min": 80,
+        "price": 4400
+      }
+    ],
+    "HYD-BLR": [
+      {
+        "airline": "Air India",
+        "flight_number": "AI 663",
+        "departs": "06:00",
+        "duration_min": 75,
+        "price": 3900
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 525",
+        "departs": "08:30",
+        "duration_min": 75,
+        "price": 3900
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 489",
+        "departs": "11:15",
+        "duration_min": 75,
+        "price": 2900
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 184",
+        "departs": "14:00",
+        "duration_min": 75,
+        "price": 2900
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 337",
+        "departs": "17:30",
+        "duration_min": 75,
+        "price": 2600
+      }
+    ],
+    "BOM-GOI": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 596",
+        "departs": "06:00",
+        "duration_min": 75,
+        "price": 3100
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 369",
+        "departs": "08:30",
+        "duration_min": 65,
+        "price": 2800
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 249",
+        "departs": "11:15",
+        "duration_min": 70,
+        "price": 3700
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 478",
+        "departs": "14:00",
+        "duration_min": 75,
+        "price": 3700
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 426",
+        "departs": "17:30",
+        "duration_min": 65,
+        "price": 4100
+      }
+    ],
+    "GOI-BOM": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 979",
+        "departs": "06:00",
+        "duration_min": 75,
+        "price": 3700
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 770",
+        "departs": "08:30",
+        "duration_min": 60,
+        "price": 3400
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 991",
+        "departs": "11:15",
+        "duration_min": 75,
+        "price": 3400
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 507",
+        "departs": "14:00",
+        "duration_min": 70,
+        "price": 3400
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 206",
+        "departs": "17:30",
+        "duration_min": 70,
+        "price": 4100
+      }
+    ],
+    "PNQ-BLR": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 510",
+        "departs": "06:00",
+        "duration_min": 90,
+        "price": 3400
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 168",
+        "departs": "08:30",
+        "duration_min": 95,
+        "price": 3700
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 266",
+        "departs": "11:15",
+        "duration_min": 90,
+        "price": 3700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 715",
+        "departs": "14:00",
+        "duration_min": 90,
+        "price": 3100
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 100",
+        "departs": "17:30",
+        "duration_min": 105,
+        "price": 3400
+      }
+    ],
+    "BLR-PNQ": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 649",
+        "departs": "06:00",
+        "duration_min": 90,
+        "price": 3700
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 728",
+        "departs": "08:30",
+        "duration_min": 90,
+        "price": 3100
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 995",
+        "departs": "11:15",
+        "duration_min": 95,
+        "price": 4000
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 485",
+        "departs": "14:00",
+        "duration_min": 95,
+        "price": 4400
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 358",
+        "departs": "17:30",
+        "duration_min": 95,
+        "price": 4000
+      }
+    ],
+    "BOM-CCU": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 472",
+        "departs": "06:00",
+        "duration_min": 170,
+        "price": 5200
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 218",
+        "departs": "08:30",
+        "duration_min": 170,
+        "price": 5800
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 591",
+        "departs": "11:15",
+        "duration_min": 170,
+        "price": 5800
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 187",
+        "departs": "14:00",
+        "duration_min": 165,
+        "price": 5200
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 867",
+        "departs": "17:30",
+        "duration_min": 165,
+        "price": 6500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 371",
+        "departs": "20:45",
+        "duration_min": 170,
+        "price": 7000
+      }
+    ],
+    "CCU-BOM": [
+      {
+        "airline": "Air India",
+        "flight_number": "AI 808",
+        "departs": "06:00",
+        "duration_min": 165,
+        "price": 6100
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 123",
+        "departs": "08:30",
+        "duration_min": 165,
+        "price": 6100
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 470",
+        "departs": "11:15",
+        "duration_min": 165,
+        "price": 6500
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 656",
+        "departs": "14:00",
+        "duration_min": 160,
+        "price": 7000
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 640",
+        "departs": "17:30",
+        "duration_min": 165,
+        "price": 6500
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 984",
+        "departs": "20:45",
+        "duration_min": 160,
+        "price": 6500
+      }
+    ],
+    "DEL-GOI": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 965",
+        "departs": "06:00",
+        "duration_min": 150,
+        "price": 5800
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 475",
+        "departs": "08:30",
+        "duration_min": 150,
+        "price": 5500
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 890",
+        "departs": "11:15",
+        "duration_min": 150,
+        "price": 5800
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 654",
+        "departs": "14:00",
+        "duration_min": 160,
+        "price": 5500
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 751",
+        "departs": "17:30",
+        "duration_min": 150,
+        "price": 5800
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 930",
+        "departs": "20:45",
+        "duration_min": 150,
+        "price": 6700
+      }
+    ],
+    "GOI-DEL": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 345",
+        "departs": "06:00",
+        "duration_min": 155,
+        "price": 6200
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 922",
+        "departs": "08:30",
+        "duration_min": 150,
+        "price": 5200
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 630",
+        "departs": "11:15",
+        "duration_min": 155,
+        "price": 5500
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 848",
+        "departs": "14:00",
+        "duration_min": 145,
+        "price": 4900
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 909",
+        "departs": "17:30",
+        "duration_min": 150,
+        "price": 5500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 365",
+        "departs": "20:45",
+        "duration_min": 150,
+        "price": 6200
+      }
+    ],
+    "PNQ-HYD": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 719",
+        "departs": "06:00",
+        "duration_min": 80,
+        "price": 3500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 927",
+        "departs": "08:30",
+        "duration_min": 80,
+        "price": 3500
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 182",
+        "departs": "11:15",
+        "duration_min": 80,
+        "price": 2900
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 332",
+        "departs": "14:00",
+        "duration_min": 85,
+        "price": 3200
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 445",
+        "departs": "17:30",
+        "duration_min": 80,
+        "price": 3500
+      }
+    ],
+    "HYD-PNQ": [
+      {
+        "airline": "Air India",
+        "flight_number": "AI 739",
+        "departs": "06:00",
+        "duration_min": 90,
+        "price": 4700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 101",
+        "departs": "08:30",
+        "duration_min": 85,
+        "price": 4200
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 452",
+        "departs": "11:15",
+        "duration_min": 75,
+        "price": 4700
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 776",
+        "departs": "14:00",
+        "duration_min": 75,
+        "price": 3500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 901",
+        "departs": "17:30",
+        "duration_min": 80,
+        "price": 3500
+      }
+    ],
+    "DEL-IXL": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 563",
+        "departs": "05:45",
+        "duration_min": 95,
+        "price": 6600
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 620",
+        "departs": "08:20",
+        "duration_min": 85,
+        "price": 6200
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 923",
+        "departs": "11:00",
+        "duration_min": 95,
+        "price": 7700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 728",
+        "departs": "14:30",
+        "duration_min": 85,
+        "price": 5700
+      }
+    ],
+    "IXL-DEL": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 557",
+        "departs": "05:45",
+        "duration_min": 90,
+        "price": 6200
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 192",
+        "departs": "08:20",
+        "duration_min": 80,
+        "price": 7100
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 505",
+        "departs": "11:00",
+        "duration_min": 95,
+        "price": 7700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 856",
+        "departs": "14:30",
+        "duration_min": 85,
+        "price": 7100
+      }
+    ],
+    "BOM-IXL": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 115",
+        "departs": "05:45",
+        "duration_min": 165,
+        "price": 7700
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 136",
+        "departs": "08:20",
+        "duration_min": 170,
+        "price": 8200
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 714",
+        "departs": "11:00",
+        "duration_min": 165,
+        "price": 8600
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 434",
+        "departs": "14:30",
+        "duration_min": 180,
+        "price": 9100
+      }
+    ],
+    "IXL-BOM": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 962",
+        "departs": "05:45",
+        "duration_min": 170,
+        "price": 9100
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 339",
+        "departs": "08:20",
+        "duration_min": 175,
+        "price": 8600
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 104",
+        "departs": "11:00",
+        "duration_min": 165,
+        "price": 8600
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 770",
+        "departs": "14:30",
+        "duration_min": 175,
+        "price": 8600
+      }
+    ],
+    "DEL-COK": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 664",
+        "departs": "05:45",
+        "duration_min": 200,
+        "price": 8500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 360",
+        "departs": "08:20",
+        "duration_min": 210,
+        "price": 7000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 625",
+        "departs": "11:00",
+        "duration_min": 210,
+        "price": 6500
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 171",
+        "departs": "14:30",
+        "duration_min": 200,
+        "price": 7400
+      }
+    ],
+    "COK-DEL": [
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 210",
+        "departs": "05:45",
+        "duration_min": 210,
+        "price": 7400
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 168",
+        "departs": "08:20",
+        "duration_min": 200,
+        "price": 8500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 100",
+        "departs": "11:00",
+        "duration_min": 205,
+        "price": 7000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 153",
+        "departs": "14:30",
+        "duration_min": 215,
+        "price": 7400
+      }
+    ],
+    "BOM-COK": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 825",
+        "departs": "05:45",
+        "duration_min": 125,
+        "price": 5000
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 174",
+        "departs": "08:20",
+        "duration_min": 115,
+        "price": 6100
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 376",
+        "departs": "11:00",
+        "duration_min": 120,
+        "price": 4100
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 418",
+        "departs": "14:30",
+        "duration_min": 120,
+        "price": 4100
+      }
+    ],
+    "COK-BOM": [
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 519",
+        "departs": "05:45",
+        "duration_min": 110,
+        "price": 4600
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 352",
+        "departs": "08:20",
+        "duration_min": 110,
+        "price": 4100
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 161",
+        "departs": "11:00",
+        "duration_min": 125,
+        "price": 5000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 281",
+        "departs": "14:30",
+        "duration_min": 115,
+        "price": 5000
+      }
+    ],
+    "DEL-JAI": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 621",
+        "departs": "05:45",
+        "duration_min": 60,
+        "price": 5100
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 887",
+        "departs": "08:20",
+        "duration_min": 60,
+        "price": 4000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 759",
+        "departs": "11:00",
+        "duration_min": 70,
+        "price": 3100
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 504",
+        "departs": "14:30",
+        "duration_min": 70,
+        "price": 3600
+      }
+    ],
+    "JAI-DEL": [
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 100",
+        "departs": "05:45",
+        "duration_min": 65,
+        "price": 4500
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 411",
+        "departs": "08:20",
+        "duration_min": 55,
+        "price": 3600
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 291",
+        "departs": "11:00",
+        "duration_min": 70,
+        "price": 4500
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 757",
+        "departs": "14:30",
+        "duration_min": 55,
+        "price": 3100
+      }
+    ],
+    "DEL-IXZ": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 249",
+        "departs": "05:45",
+        "duration_min": 215,
+        "price": 9400
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 364",
+        "departs": "08:20",
+        "duration_min": 210,
+        "price": 9900
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 436",
+        "departs": "11:00",
+        "duration_min": 220,
+        "price": 9400
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 175",
+        "departs": "14:30",
+        "duration_min": 210,
+        "price": 8500
+      }
+    ],
+    "IXZ-DEL": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 313",
+        "departs": "05:45",
+        "duration_min": 215,
+        "price": 8500
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 715",
+        "departs": "08:20",
+        "duration_min": 220,
+        "price": 9000
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 737",
+        "departs": "11:00",
+        "duration_min": 225,
+        "price": 9000
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 701",
+        "departs": "14:30",
+        "duration_min": 225,
+        "price": 9900
+      }
+    ],
+    "DEL-KUU": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 238",
+        "departs": "05:45",
+        "duration_min": 90,
+        "price": 5200
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 742",
+        "departs": "08:20",
+        "duration_min": 80,
+        "price": 5200
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 333",
+        "departs": "11:00",
+        "duration_min": 80,
+        "price": 6700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 294",
+        "departs": "14:30",
+        "duration_min": 80,
+        "price": 6700
+      }
+    ],
+    "KUU-DEL": [
+      {
+        "airline": "Air India",
+        "flight_number": "AI 744",
+        "departs": "05:45",
+        "duration_min": 80,
+        "price": 6700
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 497",
+        "departs": "08:20",
+        "duration_min": 90,
+        "price": 6100
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 180",
+        "departs": "11:00",
+        "duration_min": 90,
+        "price": 4700
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 206",
+        "departs": "14:30",
+        "duration_min": 75,
+        "price": 4700
+      }
+    ],
+    "BLR-IXZ": [
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 624",
+        "departs": "05:45",
+        "duration_min": 155,
+        "price": 7800
+      },
+      {
+        "airline": "Vistara",
+        "flight_number": "UK 857",
+        "departs": "08:20",
+        "duration_min": 160,
+        "price": 7800
+      },
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 530",
+        "departs": "11:00",
+        "duration_min": 160,
+        "price": 7800
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 632",
+        "departs": "14:30",
+        "duration_min": 150,
+        "price": 9300
+      }
+    ],
+    "IXZ-BLR": [
+      {
+        "airline": "SpiceJet",
+        "flight_number": "SG 170",
+        "departs": "05:45",
+        "duration_min": 150,
+        "price": 7800
+      },
+      {
+        "airline": "Akasa Air",
+        "flight_number": "QP 590",
+        "departs": "08:20",
+        "duration_min": 145,
+        "price": 7800
+      },
+      {
+        "airline": "Air India",
+        "flight_number": "AI 317",
+        "departs": "11:00",
+        "duration_min": 150,
+        "price": 9300
+      },
+      {
+        "airline": "IndiGo",
+        "flight_number": "6E 116",
+        "departs": "14:30",
+        "duration_min": 145,
+        "price": 7800
+      }
+    ]
+  }
+}

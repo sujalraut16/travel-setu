@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Payment Successful | TravelSetu{% endblock %}
+{% block content %}
+<section class="container narrow section">
+    <div class="panel text-center">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h1>Payment Successful</h1>
+        <p class="muted">Your booking #{{ booking.id }} for <strong>{{ booking.service_name }}</strong> is confirmed.</p>
+        <div class="actions">
+            <a class="btn btn-gold" href="{{ url_for('download_invoice', booking_id=booking.id) }}">Download Invoice</a>
+            <a class="btn btn-primary" href="{{ url_for('my_bookings') }}">Open My Bookings</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

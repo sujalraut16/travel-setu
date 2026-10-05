@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings | TravelSetu{% endblock %}
+{% block content %}
+<section class="container section">
+    <h1>My Bookings</h1>
+    <div class="table-wrap">
+        <table class="table">
+            <thead><tr><th>Service</th><th>Type</th><th>Date</th><th>Guests</th><th>Flights</th><th>Status</th><th>Payment</th><th>Invoice</th></tr></thead>
+            <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.service_name }}</td>
+                    <td>{{ booking.service_type|capitalize }}</td>
+                    <td>{{ booking.travel_date.strftime('%d %b %Y') }}</td>
+                    <td>{{ booking.guests }}</td>
+                    <td>{% if booking.outbound_flight %}<div>Outbound: {{ booking.outbound_flight }}</div>{% endif %}{% if booking.return_flight %}<div>Return: {{ booking.return_flight }}</div>{% endif %}{% if not booking.outbound_flight and not booking.return_flight %}-{% endif %}</td>
+                    <td><span class="status">{{ booking.status }}</span></td>
+                    <td>{% if booking.status == 'Requested' %}<a class="btn btn-gold btn-sm" href="{{ url_for('payment_page', booking_id=booking.id) }}">Pay Now</a>{% elif booking.status == 'Confirmed' %}<span class="text-success">Paid</span>{% else %}-{% endif %}</td>
+                    <td>{% if booking.status == 'Confirmed' %}<a class="btn btn-outline btn-sm" href="{{ url_for('download_invoice', booking_id=booking.id) }}">Download</a>{% else %}-{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="8">No bookings yet. <a href="{{ url_for('services') }}">Browse services</a>.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

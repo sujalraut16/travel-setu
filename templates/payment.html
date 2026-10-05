@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <h1>💳 Complete Payment</h1>
+    <p>Your booking is reserved until the test payment is verified.</p>
+</div>
+
+<div class="container">
+    <div class="payment-layout">
+        <div class="card payment-card">
+            <h2 class="card-title">Booking Summary</h2>
+            
+            <div class="booking-summary">
+                <div class="summary-row">
+                    <span>Booking Type:</span>
+                    <strong>{{ booking.booking_type|upper }}</strong>
+                </div>
+                {% if booking.booking_ref %}
+                <div class="summary-row">
+                    <span>Reference:</span>
+                    <strong>{{ booking.booking_ref }}</strong>
+                </div>
+                {% endif %}
+                {% if booking.details %}
+                <div class="summary-row">
+                    <span>Details:</span>
+                    <strong>{{ booking.details }}</strong>
+                </div>
+                {% endif %}
+                {% if booking.check_in %}
+                <div class="summary-row">
+                    <span>Date:</span>
+                    <strong>{{ booking.check_in }}</strong>
+                </div>
+                {% endif %}
+                <div class="summary-row">
+                    <span>Guests/Qty:</span>
+                    <strong>{{ booking.guests }}</strong>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total Amount:</span>
+                    <strong class="price-big">₹{{ booking.total_price }}</strong>
+                </div>
+            </div>
+            
+            <h3 class="mt-30">Select Payment Method</h3>
+            
+            <div class="payment-methods" id="payment-methods">
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="upi" checked>
+                    <span>📱 UPI (GPay / PhonePe / Paytm)</span>
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="card">
+                    <span>💳 Credit/Debit Card</span>
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="netbanking">
+                    <span>🏦 Net Banking</span>
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="wallet">
+                    <span>👛 Wallet</span>
+                </label>
+            </div>
+            
+            <div class="payment-actions mt-30">
+                {% if payment_available %}
+                <button id="razorpay-button" type="button" class="btn btn-gold btn-lg btn-block"
+                    data-key-id="{{ razorpay_key_id }}"
+                    data-amount="{{ razorpay_order.amount }}"
+                    data-currency="{{ razorpay_order.currency }}"
+                    data-description="{{ booking.details }}"
+                    data-order-id="{{ razorpay_order.id }}"
+                    data-confirm-url="{{ url_for('confirm_payment', booking_id=booking.id) }}"
+                    data-customer-name="{{ current_user.full_name }}"
+                    data-customer-email="{{ current_user.email }}">
+                    <i class="fas fa-lock"></i> Pay ₹{{ booking.total_price }} Securely
+                </button>
+                {% else %}
+                <div class="flash flash-warning">Razorpay test mode is not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env.</div>
+                {% endif %}
+                <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}" class="btn btn-outline btn-block mt-10">
+                    Cancel Booking
+                </a>
+            </div>
+            
+            <div class="payment-secure mt-20 text-center">
+                <small class="text-muted">🔒 100% Secure Payment | 256-bit SSL Encryption</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if payment_available %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById('razorpay-button').addEventListener('click', function () {
+    const button = this;
+    const options = {
+        key: button.dataset.keyId,
+        amount: Number(button.dataset.amount),
+        currency: button.dataset.currency,
+        name: 'TravelSetu',
+        description: button.dataset.description,
+        order_id: button.dataset.orderId,
+        // Keep all Razorpay test methods enabled; unavailable methods are
+        // filtered by Razorpay based on the account and test environment.
+        method: {
+            upi: true,
+            card: true,
+            netbanking: true,
+            wallet: true
+        },
+        config: {
+            display: {
+                blocks: {
+                    upi: {
+                        name: 'Pay via UPI',
+                        instruments: [{method: 'upi'}]
+                    }
+                },
+                sequence: ['block.upi'],
+                preferences: {show_default_blocks: true}
+            }
+        },
+        handler: function (response) {
+            fetch(button.dataset.confirmUrl, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(response)
+            }).then(result => result.json()).then(result => {
+                if (result.success) window.location.href = result.redirect;
+                else alert(result.error || 'Payment verification failed.');
+            });
+        },
+        prefill: {name: button.dataset.customerName, email: button.dataset.customerEmail},
+        theme: {color: '#800000'}
+    };
+    new Razorpay(options).open();
+});
+</script>
+{% endif %}
+
+{% endblock %}

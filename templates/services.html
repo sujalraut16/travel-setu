@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Hotels & Transport | TravelSetu{% endblock %}
+{% block content %}
+<section class="container section">
+    <h1>Hotels & Transport</h1>
+    <p class="muted">Compare a few sample services connected to the project database.</p>
+    <h2 class="section-head">Hotels</h2>
+    <div class="cards">
+        {% for service in hotels %}
+        <div class="card">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.location }}</p>
+            <p>{{ service.details }}</p>
+            <strong>₹{{ '%.0f'|format(service.price) }}</strong>
+            {% if current_user.is_authenticated %}<a class="btn block-btn" href="{{ url_for('create_booking', service_id=service.id) }}">Book</a>{% else %}<a class="btn block-btn" href="{{ url_for('login') }}">Login to Book</a>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <h2 class="section-head">Transport</h2>
+    <div class="cards">
+        {% for service in transports %}
+        <div class="card">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.location }}</p>
+            <p>{{ service.details }}</p>
+            <strong>₹{{ '%.0f'|format(service.price) }}</strong>
+            {% if current_user.is_authenticated %}<a class="btn block-btn" href="{{ url_for('create_booking', service_id=service.id) }}">Book</a>{% else %}<a class="btn block-btn" href="{{ url_for('login') }}">Login to Book</a>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

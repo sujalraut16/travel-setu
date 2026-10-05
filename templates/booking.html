@@ -1,0 +1,436 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <h1>📅 Book {{ destination.name }}</h1>
+    <p>Complete your booking details</p>
+</div>
+
+<div class="container">
+    <div class="booking-layout">
+        <div class="card">
+            <h2 class="card-title">Booking Details</h2>
+            
+            <form method="POST" action="{{ url_for('book_destination', dest_id=destination.id) }}">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label for="flight-date">Departure Date</label>
+                        <input id="flight-date" type="date" name="flight_departure_date" class="form-control" min="{{ today }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-date">Return Date</label>
+                        <input id="return-date" type="date" name="flight_return_date" class="form-control" min="{{ today }}" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-1">
+                    <div class="form-group">
+                        <label for="departure-origin">Departing from</label>
+                        <select id="departure-origin" name="origin" class="form-control" required>
+                            <option value="">Select an airport</option>
+                            <option value="PNQ">Pune (PNQ)</option>
+                            <option value="BOM">Mumbai (BOM)</option>
+                            <option value="DEL">Delhi (DEL)</option>
+                            <option value="BLR">Bengaluru (BLR)</option>
+                            <option value="HYD">Hyderabad (HYD)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-10">
+                    <button type="button" id="check-flight-button" class="btn btn-outline btn-block">
+                        Check Flight Availability
+                    </button>
+                </div>
+
+                <div class="flight-date-navigation" aria-label="Flight dates">
+                    <button type="button" id="previous-dates" class="btn btn-outline btn-sm" disabled>Previous</button>
+                    <div id="flight-date-cards" class="flight-date-cards" aria-live="polite"></div>
+                    <button type="button" id="next-dates" class="btn btn-outline btn-sm">Next 7 days</button>
+                </div>
+
+                <div id="flight-availability"
+                     class="flight-availability"
+                     data-api-url="/api/flight-availability"
+                     data-destination-airport="{{ destination.airport_iata or '' }}"
+                     data-destination-city="{{ destination.name }}"
+                     aria-live="polite"
+                     {% if not destination.airport_iata %}hidden{% endif %}></div>
+
+                <input type="hidden" name="outbound_flight_number" id="outbound-flight-number">
+                <input type="hidden" name="outbound_flight_date" id="outbound-flight-date">
+                <input type="hidden" name="outbound_flight_departure_time" id="outbound-flight-time">
+                <input type="hidden" name="return_flight_number" id="return-flight-number">
+                <input type="hidden" name="return_flight_date" id="return-flight-date">
+                <input type="hidden" name="return_flight_departure_time" id="return-flight-time">
+
+                <div id="booking-date-section" hidden>
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label for="check-in-date">Check-in Date</label>
+                            <input id="check-in-date" type="date" name="check_in" class="form-control" min="{{ today }}" disabled required>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out-date">Check-out Date</label>
+                            <input id="check-out-date" type="date" name="check_out" class="form-control" min="{{ today }}" disabled required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label>Number of Guests</label>
+                        <select name="guests" class="form-control">
+                            {% for i in range(1, 11) %}
+                            <option value="{{ i }}">{{ i }} Guest(s)</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Booking Type</label>
+                        <select name="booking_type" class="form-control">
+                            <option value="hotel">Hotel Stay</option>
+                            <option value="package">Full Package</option>
+                            <option value="activity">Activities Only</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="booking-summary-box">
+                    <h4>{{ destination.name }}</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> {{ destination.location }}</p>
+                    <p class="price-info">₹{{ destination.price_per_day }} per day per person</p>
+                </div>
+                
+                <button type="submit" class="btn btn-gold btn-lg btn-block mt-20" disabled>
+                    Proceed to Payment
+                </button>
+            </form>
+            <div id="selected-flight-summary" class="selected-flight-summary" aria-live="polite">No flights selected.</div>
+            <small class="flight-note">Flights operating; seat availability is confirmed at booking.</small>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+    const resultBox = document.getElementById('flight-availability');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const checkFlightButton = document.getElementById('check-flight-button');
+    const dateCards = document.getElementById('flight-date-cards');
+    const previousDatesButton = document.getElementById('previous-dates');
+    const nextDatesButton = document.getElementById('next-dates');
+    const returnDateInput = document.getElementById('return-date');
+    const selectedSummary = document.getElementById('selected-flight-summary');
+    const bookingDateSection = document.getElementById('booking-date-section');
+    const originInput = document.getElementById('departure-origin');
+    const checkInInput = document.getElementById('check-in-date');
+    const checkOutInput = document.getElementById('check-out-date');
+    const flightDateInput = document.getElementById('flight-date');
+    const destinationAirport = resultBox.dataset.destinationAirport;
+    const destinationCity = resultBox.dataset.destinationCity;
+    const selectedFlights = { outbound: null, return: null };
+    const today = flightDateInput.min;
+    let dateWindowOffset = 0;
+    let dateCardRequest = 0;
+    let dateCardLoadQueue = Promise.resolve();
+
+    function setBookingDatesEnabled(enabled) {
+        bookingDateSection.hidden = !enabled;
+        submitButton.disabled = !enabled;
+        submitButton.title = enabled ? 'Proceed to payment' : 'Please confirm flight availability first';
+        [checkInInput, checkOutInput].forEach((input) => {
+            input.disabled = !enabled;
+            input.required = enabled;
+        });
+        if (enabled) {
+            submitButton.disabled = false;
+        }
+    }
+
+    setBookingDatesEnabled(false);
+
+    function formatDate(value) {
+        return new Date(`${value}T00:00:00`).toLocaleDateString(undefined, {
+            weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+        });
+    }
+
+    function dateAtOffset(offset) {
+        const value = new Date(`${today}T00:00:00`);
+        value.setDate(value.getDate() + offset);
+        return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`;
+    }
+
+    function updateReturnDateMinimum() {
+        returnDateInput.min = flightDateInput.value || today;
+        if (returnDateInput.value && returnDateInput.value < returnDateInput.min) {
+            returnDateInput.value = returnDateInput.min;
+        }
+    }
+
+    function setSelectedFlight(direction, flight, date) {
+        const time = (flight.departure_time || '').match(/\d{2}:\d{2}/)?.[0] || '';
+        selectedFlights[direction] = { number: flight.flight_number || '', date, time };
+        const prefix = direction === 'outbound' ? 'outbound' : 'return';
+        document.getElementById(`${prefix}-flight-number`).value = selectedFlights[direction].number;
+        document.getElementById(`${prefix}-flight-date`).value = date;
+        document.getElementById(`${prefix}-flight-time`).value = time;
+        updateSelectedSummary();
+    }
+
+    function clearSelectedFlight(direction) {
+        selectedFlights[direction] = null;
+        const prefix = direction === 'outbound' ? 'outbound' : 'return';
+        document.getElementById(`${prefix}-flight-number`).value = '';
+        document.getElementById(`${prefix}-flight-date`).value = '';
+        document.getElementById(`${prefix}-flight-time`).value = '';
+        updateSelectedSummary();
+    }
+
+    function updateSelectedSummary() {
+        const lines = ['outbound', 'return'].filter((direction) => selectedFlights[direction]).map((direction) => {
+            const flight = selectedFlights[direction];
+            const label = direction === 'outbound' ? 'Outbound' : 'Return';
+            return `${label}: ${flight.number} | ${flight.date} | ${flight.time || 'time unavailable'}`;
+        });
+        selectedSummary.textContent = lines.length ? `Selected flights: ${lines.join(' / ')}` : 'No flights selected.';
+    }
+
+    function flightDateCardsPlaceholder(message) {
+        dateCards.replaceChildren();
+        for (let index = 0; index < 7; index += 1) {
+            const date = dateAtOffset(dateWindowOffset + index);
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'flight-date-card';
+            card.innerHTML = `<strong>${formatDate(date)}</strong><span>${message}</span>`;
+            card.addEventListener('click', () => {
+                flightDateInput.value = date;
+                updateReturnDateMinimum();
+                clearSelectedFlight('outbound');
+                setBookingDatesEnabled(false);
+            });
+            dateCards.append(card);
+        }
+        previousDatesButton.disabled = dateWindowOffset === 0;
+    }
+
+    function loadDateCards() {
+        const requestId = ++dateCardRequest;
+        flightDateCardsPlaceholder(originInput.value && destinationAirport ? 'Checking flights...' : 'Choose an airport');
+        previousDatesButton.disabled = dateWindowOffset === 0;
+        if (!originInput.value || !destinationAirport) return Promise.resolve();
+
+        dateCardLoadQueue = dateCardLoadQueue.then(async () => {
+            if (requestId !== dateCardRequest) return;
+            const selectedOrigin = originInput.value;
+            const startOffset = dateWindowOffset;
+            for (let index = 0; index < 7; index += 1) {
+                if (requestId !== dateCardRequest) return;
+                const date = dateAtOffset(startOffset + index);
+                try {
+                    const params = new URLSearchParams({ origin: selectedOrigin, destination: destinationAirport, date });
+                    const response = await fetch(`${resultBox.dataset.apiUrl}?${params}`);
+                    const data = await response.json();
+                    if (requestId !== dateCardRequest) return;
+                    const card = dateCards.children[index];
+                    const count = data.error ? 'Unavailable' : data.count === 1 ? '1 flight' : `${data.count || 0} flights`;
+                    card.lastElementChild.textContent = data.error ? count : data.count ? count : 'No flights';
+                } catch (error) {
+                    if (requestId !== dateCardRequest) return;
+                    dateCards.children[index].lastElementChild.textContent = 'Unavailable';
+                }
+            }
+        });
+        return dateCardLoadQueue;
+    }
+
+    function routeHeading(direction, date) {
+        const originOption = originInput.options[originInput.selectedIndex];
+        const originCity = originOption ? originOption.textContent.replace(/\s*\([A-Z]{3}\)\s*$/, '') : '';
+        const outbound = direction === 'outbound';
+        const fromCity = outbound ? originCity : destinationCity;
+        const fromCode = outbound ? originInput.value : destinationAirport;
+        const toCity = outbound ? destinationCity : originCity;
+        const toCode = outbound ? destinationAirport : originInput.value;
+        return `${outbound ? 'Outbound' : 'Return'}: ${fromCity} (${fromCode}) -> ${toCity} (${toCode}) | ${formatDate(date)}`;
+    }
+
+    function statusClass(status) {
+        const normalized = (status || '').toLowerCase().replace(/\s+/g, '');
+        if (['scheduled', 'expected', 'checkin', 'boarding'].includes(normalized)) return 'flight-status-green';
+        if (normalized.includes('delay')) return 'flight-status-amber';
+        if (normalized.includes('cancel')) return 'flight-status-red';
+        return '';
+    }
+
+    function timeOnly(value) {
+        return (value || '').match(/\d{2}:\d{2}/)?.[0] || '—';
+    }
+
+    function showResult(direction, date, data, kind = 'success') {
+        resultBox.hidden = false;
+        let panel = resultBox.querySelector(`[data-direction="${direction}"]`);
+        if (!panel) {
+            panel = document.createElement('section');
+            panel.dataset.direction = direction;
+            resultBox.append(panel);
+        }
+        panel.className = `flight-result flight-result-${kind}`;
+        panel.replaceChildren();
+
+        const heading = document.createElement('h3');
+        heading.textContent = routeHeading(direction, date);
+        panel.append(heading);
+
+        if (data.error) {
+            const message = document.createElement('p');
+            message.textContent = data.error;
+            panel.append(message);
+        } else if (!data.flights?.length) {
+            const message = document.createElement('p');
+            message.textContent = 'No flights found for this date.';
+            panel.append(message);
+        } else {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            const table = document.createElement('table');
+            table.className = 'table flight-results-table';
+            table.innerHTML = '<thead><tr><th>Airline</th><th>Flight</th><th>Departs</th><th>Arrives</th><th>Status</th><th>Select</th></tr></thead>';
+            const body = document.createElement('tbody');
+            data.flights.forEach((flight) => {
+                const row = document.createElement('tr');
+                const values = [flight.airline || 'Airline', flight.flight_number || '—', timeOnly(flight.departure_time), timeOnly(flight.arrival_time)];
+                values.forEach((value) => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.append(cell);
+                });
+                const statusCell = document.createElement('td');
+                const status = document.createElement('span');
+                status.className = `flight-status ${statusClass(flight.status)}`;
+                status.textContent = flight.status || 'Unavailable';
+                statusCell.append(status);
+                row.append(statusCell);
+                const actionCell = document.createElement('td');
+                const selectButton = document.createElement('button');
+                selectButton.type = 'button';
+                selectButton.className = 'btn btn-outline btn-sm';
+                selectButton.textContent = 'Select';
+                selectButton.addEventListener('click', () => {
+                    setSelectedFlight(direction, flight, date);
+                    panel.querySelectorAll('tbody tr').forEach((flightRow) => {
+                        const button = flightRow.querySelector('button');
+                        const isSelected = flightRow === row;
+                        button.textContent = isSelected ? 'Selected' : 'Select';
+                        button.setAttribute('aria-pressed', String(isSelected));
+                    });
+                });
+                actionCell.append(selectButton);
+                row.append(actionCell);
+                body.append(row);
+            });
+            table.append(body);
+            wrap.append(table);
+            panel.append(wrap);
+        }
+
+        const sourceBadge = document.createElement('small');
+        sourceBadge.className = 'flight-source';
+        sourceBadge.textContent = data.source === 'demo'
+            ? 'Sample data'
+            : `Live data by AeroDataBox${data.updated_at ? ` | Updated ${data.updated_at}` : ''}`;
+        panel.append(sourceBadge);
+    }
+
+    async function requestFlights(origin, destination, date) {
+        const params = new URLSearchParams({ origin, destination, date });
+        const response = await fetch(`${resultBox.dataset.apiUrl}?${params}`);
+        return response.json();
+    }
+
+    if (!destinationAirport) {
+        resultBox.hidden = false;
+        resultBox.textContent = 'Flight availability is not configured for this destination yet. Please add an airport code for this destination to check flights.';
+        setBookingDatesEnabled(false);
+        return;
+    }
+
+    flightDateCardsPlaceholder('Choose an airport');
+    updateReturnDateMinimum();
+
+    checkFlightButton.addEventListener('click', async () => {
+        const origin = originInput.value;
+        const outboundDate = flightDateInput.value;
+        const returnDate = returnDateInput.value;
+        if (!origin || !outboundDate || !returnDate) {
+            return;
+        }
+        if (outboundDate < today || returnDate < outboundDate) {
+            returnDateInput.min = outboundDate;
+            return;
+        }
+
+        clearSelectedFlight('outbound');
+        clearSelectedFlight('return');
+        checkFlightButton.disabled = true;
+        checkFlightButton.textContent = 'Checking flights...';
+        showResult('outbound', outboundDate, { flights: [], source: 'demo' }, 'loading');
+        showResult('return', returnDate, { flights: [], source: 'demo' }, 'loading');
+        resultBox.querySelectorAll('.flight-result-loading').forEach((panel) => {
+            panel.querySelector('p')?.remove();
+            const message = document.createElement('p');
+            message.textContent = 'Checking flights...';
+            panel.append(message);
+        });
+
+        let outboundAvailable = false;
+        try {
+            const outbound = await requestFlights(origin, destinationAirport, outboundDate);
+            showResult('outbound', outboundDate, outbound, outbound.error ? 'error' : outbound.count ? 'success' : 'empty');
+            outboundAvailable = !outbound.error && outbound.count > 0;
+        } catch (error) {
+            showResult('outbound', outboundDate, { error: 'Flight availability could not be checked. Please try again.' }, 'error');
+        }
+
+        try {
+            const returning = await requestFlights(destinationAirport, origin, returnDate);
+            showResult('return', returnDate, returning, returning.error ? 'error' : returning.count ? 'success' : 'empty');
+        } catch (error) {
+            showResult('return', returnDate, { error: 'Flight availability could not be checked. Please try again.' }, 'error');
+        }
+
+        setBookingDatesEnabled(outboundAvailable);
+        checkFlightButton.disabled = false;
+        checkFlightButton.textContent = 'Check Flight Availability';
+    });
+
+    originInput.addEventListener('change', () => {
+        clearSelectedFlight('outbound');
+        clearSelectedFlight('return');
+        setBookingDatesEnabled(false);
+        loadDateCards();
+    });
+    flightDateInput.addEventListener('change', () => {
+        updateReturnDateMinimum();
+        clearSelectedFlight('outbound');
+        setBookingDatesEnabled(false);
+    });
+    returnDateInput.addEventListener('change', () => clearSelectedFlight('return'));
+    previousDatesButton.addEventListener('click', () => {
+        if (dateWindowOffset >= 7) {
+            dateWindowOffset -= 7;
+            loadDateCards();
+        }
+    });
+    nextDatesButton.addEventListener('click', () => {
+        dateWindowOffset += 7;
+        loadDateCards();
+    });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TravelSetu{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="{{ url_for('index') }}" class="logo">🌍 TravelSetu</a>
+        <button class="mobile-toggle" type="button" aria-label="Toggle navigation" onclick="document.getElementById('navMenu').classList.toggle('active')">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('destinations') }}"><i class="fas fa-map-marker-alt"></i> Destinations</a></li>
+            <li><a href="{{ url_for('flights') }}"><i class="fas fa-plane"></i> Flights</a></li>
+            <li><a href="{{ url_for('search') }}"><i class="fas fa-search"></i> Search</a></li>
+            <li><a href="{{ url_for('services') }}"><i class="fas fa-bed"></i> Hotels & Transport</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('favorites') }}"><i class="fas fa-heart"></i> Favorites ({{ favorites_count }})</a></li>
+                <li><a href="{{ url_for('my_bookings') }}"><i class="fas fa-ticket-alt"></i> My Bookings ({{ bookings_count }})</a></li>
+                <li><a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm">Login</a></li>
+                <li><a href="{{ url_for('register') }}" class="btn btn-gold btn-sm">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}<div class="container flash-container">{% for category, message in messages %}<div class="flash flash-{{ category }}"><span>{{ message }}</span><button type="button" aria-label="Dismiss message" onclick="this.parentElement.remove()">&times;</button></div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main class="main-content">{% block content %}{% endblock %}</main>
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-section"><h3>🌍 TravelSetu</h3><p>Discover better journeys with smart travel planning.</p></div>
+        <div class="footer-section"><h4>Explore</h4><ul><li><a href="{{ url_for('destinations') }}">Destinations</a></li><li><a href="{{ url_for('services') }}">Hotels & Transport</a></li><li><a href="{{ url_for('search') }}">Search</a></li></ul></div>
+        <div class="footer-section"><h4>Account</h4><ul><li><a href="{{ url_for('login') }}">Login</a></li><li><a href="{{ url_for('register') }}">Register</a></li></ul></div>
+        <div class="footer-section"><h4>Contact</h4><p>📧 support@travelsetu.com</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; {{ current_year }} TravelSetu. All rights reserved.</p></div>
+</footer>
+<script>
+    setTimeout(() => document.querySelectorAll('.flash').forEach(el => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }), 4000);
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

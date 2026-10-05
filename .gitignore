@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+instance/
+flight_cache.db
+.venv/
+*.db
+.vscode/

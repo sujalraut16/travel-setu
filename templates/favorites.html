@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Favorites | TravelSetu{% endblock %}
+{% block content %}
+<section class="container section">
+    <h1>Saved Favorites</h1>
+    <div class="cards">
+        {% for item in favorites %}
+            {% set dest = destination_map[item.destination_id] %}
+            <a class="card" href="{{ url_for('destination_detail', id=dest.id) }}">
+                <h3>{{ dest.name }}</h3>
+                <p>{{ dest.location }}</p>
+                <small>★ {{ '%.1f'|format(dest.rating or 0) }}</small>
+            </a>
+        {% else %}
+            <div class="panel"><p>No saved destinations yet.</p><a class="btn" href="{{ url_for('destinations') }}">Browse Destinations</a></div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

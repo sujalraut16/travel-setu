@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <h1>Flight Booking</h1>
+    <p>Find and book flights for your next journey</p>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2 class="card-title">Search Flights</h2>
+        <form method="GET" action="{{ url_for('flights') }}">
+            <div class="grid grid-4">
+                <div class="form-group">
+                    <label for="origin">Origin</label>
+                    <input id="origin" type="text" name="origin" class="form-control"
+                           placeholder="e.g. PNQ" value="{{ origin }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input id="destination" type="text" name="destination" class="form-control"
+                           placeholder="e.g. DEL" value="{{ destination }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Travel Date</label>
+                    <input id="date" type="date" name="date" class="form-control"
+                           value="{{ travel_date }}" required>
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-search" aria-hidden="true"></i> Search Flights
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if error %}
+    <div class="flash flash-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    {% if results %}
+    <section class="card">
+        <h2 class="card-title">{{ results|length }} Flights Found</h2>
+        <p>{{ origin }} to {{ destination }} | {{ travel_date }}</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Flight Number</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in results %}
+                    <tr>
+                        <td>{{ flight.airline or 'Airline unavailable' }}</td>
+                        <td>{{ flight.flight_number }}</td>
+                        <td>{{ flight.departure_time or 'Not available' }}</td>
+                        <td>{{ flight.arrival_time or 'Not available' }}</td>
+                        <td>
+                            {{ flight.status or 'Scheduled' }}<br>
+                            {% if flight.seats_left == 0 %}
+                                <strong>Sold out</strong>
+                            {% else %}
+                                <small>{{ flight.seats_left }} seats left</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ flight.currency or 'INR' }} {{ '%.2f'|format(flight.price or 0) }}</strong>
+                            {% if flight.seats_left > 0 %}
+                            <form method="POST" action="{{ url_for('book_flight') }}">
+                                <input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
+                                <input type="hidden" name="origin" value="{{ origin }}">
+                                <input type="hidden" name="destination" value="{{ destination }}">
+                                <input type="hidden" name="date" value="{{ travel_date }}">
+                                <label for="passengers-{{ loop.index }}">Passengers</label>
+                                <select id="passengers-{{ loop.index }}" name="passengers" class="form-control-sm">
+                                    {% for count in range(1, 10) %}
+                                    <option value="{{ count }}">{{ count }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn btn-gold btn-sm">Book</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% elif searched %}
+    <div class="card text-center">
+        <h3>No flights found</h3>
+        <p>Try another route or travel date.</p>
+    </div>
+    {% else %}
+    <div class="card text-center">
+        <p>Enter an origin, destination, and travel date to search available flights.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
